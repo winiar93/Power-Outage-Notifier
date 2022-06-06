@@ -32,14 +32,14 @@ def send_mail_notification(mail_body_text):
         logging.info('Found connection error')
 
 
-def blackouts_information(url, willage_name):
+def blackouts_information(url, village_name):
     cnt = 0
     errors_list = []
     mail_text = ''
     output = requests.get(url).json()
     for outages in output:
         for i in output[outages]:
-            if len(re.findall(willage_name, i['Message'])) != 0:
+            if len(re.findall(village_name, i['Message'])) != 0:
                 cnt += 1
                 txt = f'OD : ' + f"{output[outages][0]['StartDate']} " + f' OD : ' + f"{output[outages][0]['EndDate']}"
                 errors_list.append(txt)
@@ -51,4 +51,4 @@ def blackouts_information(url, willage_name):
 
 
 if __name__ == "__main__":
-    send_mail_notification(blackouts_information(url, willage_name=config.willage_name))
+    send_mail_notification(blackouts_information(url, willage_name=config.village_name))
